@@ -76,7 +76,7 @@ class QuestionView extends Component {
         return;
       },
       error: (error) => {
-        alert('Unable to load questions. Please try your request again');
+        alert('Unable to load questions. The selected category likely has no questions. Please try your request again');
         return;
       },
     });
@@ -84,7 +84,7 @@ class QuestionView extends Component {
 
   submitSearch = (searchTerm) => {
     $.ajax({
-      url: `/questions`, //TODO: update request URL
+      url: `/questions/search_results`, //TODO: update request URL
       type: 'POST',
       dataType: 'json',
       contentType: 'application/json',
