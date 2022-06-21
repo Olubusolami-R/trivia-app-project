@@ -19,7 +19,6 @@ def paginate_question(request, questions):
     return current_questions
 
 def create_app(test_config=None):
-    # create and configure the app
     app = Flask(__name__)
     setup_db(app)
     cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
@@ -40,7 +39,8 @@ def create_app(test_config=None):
         if len(categories)==0:
             abort(404)
         categories_dict={}
-        #render in the required key-value format
+
+        """Render in the required key-value format"""
         for category in categories: 
             categories_dict[category.id]=category.type
         return jsonify({'success':True,'categories':categories_dict})
@@ -49,8 +49,10 @@ def create_app(test_config=None):
     def get_paginated_questions():
         questions=Question.query.order_by(Question.id).all()
         formatted_questions=paginate_question(request,questions)
+
         if(len(formatted_questions)==0):
-            abort(404) #no questions for that page
+            abort(404)      # no questions for that page
+
         categories=Category.query.order_by(Category.id).all()
         categories_dict={}
         for category in categories:
@@ -72,6 +74,11 @@ def create_app(test_config=None):
     @app.route('/questions',methods=['POST'])
     def create_question():
         data=request.get_json()
+
+        """To check if the question and answer are supplied"""
+        if data['question']=='' or data['answer']=='':
+            abort(400)
+
         question=Question(question=data['question'],
                             answer=data['answer'],
                             category=data['category'],
@@ -86,10 +93,10 @@ def create_app(test_config=None):
 
     @app.route('/questions/search_results',methods=['POST'])
     def search():
-        data=request.get_json()
-        searchTerm=data['searchTerm']
         try:
-            questions=Question.query.filter(Question.question.ilike('%'+searchTerm+'%')).all()
+            data=request.get_json()
+            search_term=data['searchTerm']
+            questions=Question.query.filter(Question.question.ilike('%'+search_term+'%')).all()
             questions=paginate_question(request,questions)
             return jsonify({'success':True,'questions':questions})
         except:
@@ -98,7 +105,7 @@ def create_app(test_config=None):
     @app.route('/categories/<category_id>/questions',methods=['GET'])
     def get_category_questions(category_id):
         current_category=Category.query.get(category_id)
-        if current_category==None: #the category does not exist
+        if current_category==None:      # the category does not exist
             abort(404)
         questions=Question.query.filter_by(category=category_id).all()
         f_questions=paginate_question(request,questions)
@@ -108,39 +115,34 @@ def create_app(test_config=None):
     def get_quiz():
         try:
             data=request.get_json()
+            print(data)         #for debugging
             category_id=data['quiz_category']['id']
-            previousQuestions=data['previous_questions']
-            print(data['quiz_category'],previousQuestions)
+            previous_questions=data['previous_questions']
+
+            """To decide set of questions"""
             if category_id==0:
                 questions=Question.query.all()
             else:
                 questions=Question.query.filter_by(category=category_id).all()
-
+                
             formatted_questions=[question.format() for question in questions]
+            unused_questions=[]     # to store questions that have not been answered
 
-            unused_questions=[] #to store questions that have not been answered
-
-            for question in formatted_questions: #filtering unused questions
-                if question['id'] not in previousQuestions:
+            for question in formatted_questions:        
+                if question['id'] not in previous_questions:
                     unused_questions.append(question) 
         
             if len(unused_questions)==0:
-                currentQuestion=None 
-                #This means all questions have been exhausted (or did not exist at all) and will 
-                # propel a forced end to the trivia quiz on the frontend.
+                currentQuestion=None        # forces quiz to end because no more new questions
             else:
                 currentQuestion=random.choice(unused_questions)
 
-            return jsonify({'success':True,'question':currentQuestion,})
+            return jsonify({'success':True,'question':currentQuestion})
         except:
             abort(400)
         
 
-    """
-    @TODO:
-    Create error handlers for all expected errors
-    including 404 and 422.
-    """
+    
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
@@ -165,5 +167,18 @@ def create_app(test_config=None):
             'message':'bad request'
         }),400
 
+    @app.errorhandler(500)
+    def not_found(error):
+        return jsonify({
+            'success':False,
+            'error':500,
+            'message':'internal server error'
+        }),500
+    @app.errorhandler(405)
+    def not_found(error):
+        return (
+            jsonify({"success": False, "error": 405, "message": "method not allowed"}),
+            405,
+        )
     return app
 
