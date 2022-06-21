@@ -247,7 +247,7 @@ Sample output:
 
 `POST '/questions/search_results'`
 
-This endpoint is used to sends a post request  to search for a question by a search term.
+This endpoint is used to send a post request  to search for a question by a search term.
 - Request Arguments: None.
 - Returns: A success value and a list of formatted question objects.
 Sample: curl -X POST -H "Content-Type:application/json" -d '{"searchTerm":"title"}' "http://127.0.0.1:5000/questions/search_results" 
