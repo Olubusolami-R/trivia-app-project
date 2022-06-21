@@ -22,7 +22,8 @@ psql trivia < trivia.psql
 ```
 
 You should have the database set up properly on your system. You can verify using the following commands in your terminal:
-``` psql trivia
+```bash
+psql trivia
 \dt 
 ```
 
