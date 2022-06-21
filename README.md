@@ -19,23 +19,35 @@ psql trivia < trivia.psql
 ```
 
 You should have the database set up properly on your system. You can verify using the following commands in your terminal:
-```bash psql trivia ```
-```bash \dt```
+``` psql trivia
+\dt 
+```
 ### Backend
-After setting up the virtual environment, navigate to the backend folder. In the backend folder, there is a requirements.txt file which should be installed by running the command ```bash pip install requirements.txt``` or ```bash pip3 install requirements.txt``` in your terminal or command line. After this, all required dependencies should have been installed.
+After setting up the virtual environment, navigate to the backend folder. In the backend folder, there is a requirements.txt file which should be installed by running the command ```bash
+pip install requirements.txt
+``` 
+or 
+```bash 
+pip3 install requirements.txt
+``` 
+in your terminal or command line. After this, all required dependencies should have been installed.
 
 In order to run the project, ensure you have navigated to the backend folder and run the following commands:
-```bash export FLASKAPP=flaskr ```
-```bash export FLASKENV=development ```
-```bash flask run ```
+```bash 
+export FLASKAPP=flaskr
+export FLASKENV=development
+flask run 
+```
 
 The commands put the app in development and also ensure the __init.py__ file in the flaskr folder is used. The project should be running on http://127.0.0.1:5000 on your computer . If you are running windows locally, you can look for the equivalent of the commands for windows in the [Flask documentation](https://flask.palletsprojects.com/en/2.1.x/quickstart/#a-minimal-application)
 
 
 ### Frontend
 Ensure you have navigated to the frontend folder, then run the following commands:
-```bash npm install //run this only once to install the dependencies```
-```bash npm start  //to run the project```
+```bash 
+npm install //run this only once to install the dependencies
+npm start  //to run the project
+```
 After running npm start, the project should be running on http://localhost:3000/ where you will see the trivia interface.
 
 ### Tests
@@ -62,17 +74,17 @@ The API will return 3 major errors when requests do not succeed:
 Errors are returned as json in the following format:
 ```json
 {
-    'success':False,
-    'error':400,
-    'message':'bad request'
+    "success":False,
+    "error":400,
+    "message":"bad request"
 }
 ```
 
 ### API Endpoints
-`GET '/categories'`
+`GET '/categories'` \
 - Request Arguments: None
 - Returns: A success value and an object with a single key, categories, that contains an object of id (key): category_string (value) pairs.
-Sample: curl "http://127.0.0.1:5000/categories"
+Sample: curl "http://127.0.0.1:5000/categories" \
 Sample output:
 ```bash 
 {
@@ -89,11 +101,11 @@ Sample output:
 }
 ```
 
-`GET '/questions'`
+`GET '/questions'` \
 - Request arguemnts: None
 - Returns: A success value, a list of question objects, the total number questions, current category and an object with a single key, categories, that contains an object of id (key): category_string (value) pairs. The results of the request are all paginated in groups of 10.
 
-Sample: curl "http://127.0.0.1:5000/questions?page=1"
+Sample: curl "http://127.0.0.1:5000/questions?page=1" \
 Sample output:
 ```bash 
 {
@@ -184,11 +196,11 @@ Sample output:
 }
 ```
 
-`DELETE '/questions/{question_id}`
-This endpoint is use to delete questions from the database.
+`DELETE '/questions/{question_id}` \
+This endpoint is use to delete questions from the database. 
 - Request Arguments: The id of the question to be deleted(question_id).
 - Returns: A success value after deletion from database.
-Sample: curl -X DELETE "http://127.0.0.1:5000/questions/16"
+Sample: curl -X DELETE "http://127.0.0.1:5000/questions/16" \
 Sample output:
 ```bash 
 {
@@ -196,11 +208,11 @@ Sample output:
 }
 ```
 
-`POST '/questions'`
+`POST '/questions'` \
 This endpoint is used to create or add questions to the database.
 - Request Arguments: None.
 - Returns: A success value after successful addition to database.
-Sample: curl -X POST -H "Content-Type:application/json" -d '{"question": "How are you?", "answer": "Fine", "difficulty": 1,"category":5}' "http://127.0.0.1:5000/questions"
+Sample: curl -X POST -H "Content-Type:application/json" -d '{"question": "How are you?", "answer": "Fine", "difficulty": 1,"category":5}' "http://127.0.0.1:5000/questions" \
 Sample output:
 ```bash 
 {
@@ -208,11 +220,11 @@ Sample output:
 }
 ```
 
-`POST '/questions/search_results'`
+`POST '/questions/search_results'` \
 This endpoint is used to sends a post request  to search for a question by a search term.
 - Request Arguments: None.
 - Returns: A success value and a list of formatted question objects.
-Sample: curl -X POST -H "Content-Type:application/json" -d '{"searchTerm":"title"}' "http://127.0.0.1:5000/questions/search_results"
+Sample: curl -X POST -H "Content-Type:application/json" -d '{"searchTerm":"title"}' "http://127.0.0.1:5000/questions/search_results" \
 Sample output:
 ```bash 
 {
@@ -235,11 +247,11 @@ Sample output:
   "success": true
 }
 ```
-`GET '/categories/{category_id}/questions'`
+`GET '/categories/{category_id}/questions'` \
 This endpoint gets the questions associated with the specified category.
 - Request Arguments: None
 - Returns: A success value, a list of question objects, the total number questions and the current category. The results of the request are all paginated in groups of 10.
-Sample: curl "http://127.0.0.1:5000/categories/5/questions"
+Sample: curl "http://127.0.0.1:5000/categories/5/questions" \
 Sample output:
 ```bash 
 {
@@ -290,7 +302,7 @@ Sample output:
 This endpoint sends a post request in order to get the next question for the trivia quiz.
 - Request Arguments: None
 - Returns: A success value and a single question object.
-Sample: curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type:application/json" -d '{"quiz_category":{"id": "1","type": "Science"},"previous_questions":[]}'
+Sample: curl http://127.0.0.1:5000/quizzes -X POST -H "Content-Type:application/json" -d '{"quiz_category":{"id": "1","type": "Science"},"previous_questions":[]}' \
 Sample output:
 ```bash 
 {
