@@ -28,10 +28,13 @@ psql trivia
 ```
 
 ### Backend
-After setting up the virtual environment, navigate to the backend folder. In the backend folder, there is a requirements.txt file which should be installed by running the command ```bash
+After setting up the virtual environment, navigate to the backend folder. In the backend folder, there is a requirements.txt file which should be installed by running the command 
+```bash
 pip install requirements.txt
 ``` 
+
 or 
+
 ```bash 
 pip3 install requirements.txt
 ``` 
