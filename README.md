@@ -97,7 +97,7 @@ Errors are returned as json in the following format:
 
 - Request Arguments: None
 - Returns: A success value and an object with a single key, categories, that contains an object of id (key): category_string (value) pairs.
-Sample: curl "http://127.0.0.1:5000/categories" \
+Sample: curl "http://127.0.0.1:5000/categories" 
 
 Sample output:
 ```bash 
