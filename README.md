@@ -2,7 +2,7 @@
 
 
 ## About the Trivia App
-This app is a project from the Udacity Alx-t fullstack nanodegree. Users of the app will be able to view questions and answers from all categories or one category bon the list page. Users can also search for questions.
+Users of the app will be able to view questions and answers from all categories or one category bon the list page. Users can also search for questions.
 On the "Add" page which is the second page,the app allows users to add new questions to categories. Lastly, users also get to play a trivia game with questions from all categories or one category on the "Play" page.
 
 
@@ -355,4 +355,4 @@ Sample output:
 
 ## Acknowledgements
 
-To the alx-t team and every alx-t learner staying up till 3 am. We'll make it through.
+Super grateful to the ALX team for the opportunity.
